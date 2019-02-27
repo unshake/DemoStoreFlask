@@ -5,7 +5,7 @@ from database_setup import Base, Users, Products, ShoppingCart
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///demostore_flask.db')
+engine = create_engine('sqlite:///demostore_flask.db?check_same_thread=False')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -42,13 +42,13 @@ def showProducts():
 
 @app.route('/home/products/cart/')
 def addToCart():
-	return render_template('Cart.html')
+	return "To be implemented"
 	
 
 @app.route('/home/products/<string:user_name>/userShop/')
 def userShop(user_name):
-	
-	return "To be implemented"
+	allProducts = session.query(Products).all()
+	return render_template('userShop.html', userName = user_name, products = allProducts)
 	
 
 @app.route('/home/signIn/', methods=['GET', 'POST'])
